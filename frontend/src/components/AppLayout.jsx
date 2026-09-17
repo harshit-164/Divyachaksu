@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Outlet, Link, NavLink } from "react-router-dom";
-import { Menu, X, Radio } from "lucide-react";
+import { Menu, X, Orbit } from "lucide-react";
 import Sidebar from "./Sidebar";
 import { useLive } from "../context/LiveContext";
 import { NAV_ITEMS } from "../utils/constants";
@@ -17,13 +17,13 @@ export default function AppLayout() {
         : "bg-muted";
 
   return (
-    <div className="min-h-screen flex bg-primary text-text">
+    <div className="min-h-screen flex bg-primary text-text lg:gap-5 lg:p-5 app-canvas">
       <Sidebar />
-      <div className="flex-1 min-w-0 flex flex-col">
-        <div className="lg:hidden sticky top-0 z-30 flex items-center justify-between gap-2 px-4 py-3 bg-secondary text-text border-b border-border">
+      <div className="flex-1 min-w-0 flex flex-col lg:rounded-[24px] lg:border lg:border-white/10 lg:bg-primary/55 lg:overflow-hidden">
+        <div className="lg:hidden sticky top-0 z-30 flex items-center justify-between gap-2 px-4 py-3 bg-secondary/95 text-text border-b border-white/10 backdrop-blur-xl">
           <Link to="/" className="flex items-center gap-2">
-            <Radio className="h-4 w-4 text-accent" />
-            <span className="font-display text-lg text-accent">Risk Radar</span>
+            <Orbit className="h-4 w-4 text-accent" strokeWidth={1.7} />
+            <span className="font-display text-lg">Divyachaksu</span>
           </Link>
           <div className="flex items-center gap-3">
             <span className="inline-flex items-center gap-1.5 text-[11px] text-muted">
@@ -33,7 +33,7 @@ export default function AppLayout() {
             <button
               type="button"
               aria-label="Toggle menu"
-              className="rounded-md border border-border px-2 py-1.5 text-text"
+              className="rounded-xl border border-white/10 bg-card px-2.5 py-2 text-text transition active:scale-[0.98]"
               onClick={() => setOpen((v) => !v)}
             >
               {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
@@ -48,8 +48,8 @@ export default function AppLayout() {
               className="absolute inset-0 bg-primary/70"
               onClick={() => setOpen(false)}
             />
-            <nav className="absolute left-0 top-0 bottom-0 w-72 bg-primary text-text p-4 space-y-1 shadow-xl border-r border-border">
-              <div className="font-display text-xl text-accent mb-4 px-2">Risk Radar</div>
+            <nav className="absolute left-0 top-0 bottom-0 w-72 bg-[#100d12] text-text p-4 space-y-1 shadow-2xl border-r border-white/10">
+              <div className="font-display text-xl mb-5 px-2">Divyachaksu</div>
               {NAV_ITEMS.map((item) => (
                 <NavLink
                   key={item.to}
@@ -58,8 +58,8 @@ export default function AppLayout() {
                   className={({ isActive }) =>
                     `block rounded-md px-3 py-2.5 text-sm ${
                       isActive
-                        ? "bg-secondary text-accent border border-accent/30"
-                        : "text-muted hover:bg-card hover:text-text"
+                        ? "bg-accent/15 text-text border border-accent/20"
+                        : "text-muted hover:bg-white/[0.05] hover:text-text"
                     }`
                   }
                 >

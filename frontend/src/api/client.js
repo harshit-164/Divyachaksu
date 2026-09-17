@@ -13,7 +13,7 @@ client.interceptors.response.use(
   (response) => response,
   (error) => {
     if (import.meta.env.DEV) {
-      console.error("[Risk Radar API]", error?.config?.url, error?.message, error?.response?.status);
+      console.error("[Divyachaksu API]", error?.config?.url, error?.message, error?.response?.status);
     }
     return Promise.reject(error);
   }

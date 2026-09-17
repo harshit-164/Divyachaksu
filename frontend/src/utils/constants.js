@@ -16,10 +16,10 @@ export const RISK_LEVELS = ["Low", "Medium", "High", "Critical"];
 export const ALERT_STATUSES = ["Open", "Investigating", "Resolved", "False Positive"];
 
 export const RISK_COLORS = {
-  Low: "#22C55E",
-  Medium: "#FBBF24",
-  High: "#F59E0B",
-  Critical: "#DC2626",
+  Low: "#62D1A8",
+  Medium: "#E6CF81",
+  High: "#E9B56E",
+  Critical: "#F06875",
 };
 
 export const NAV_ITEMS = [

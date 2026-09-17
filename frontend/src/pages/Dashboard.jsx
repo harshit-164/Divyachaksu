@@ -78,8 +78,6 @@ export default function Dashboard() {
 
       if (ok === 0) {
         toast.error("Failed to load dashboard — check API connection");
-      } else if (ok < results.length) {
-        toast.error("Some dashboard panels failed to load", { id: "dash-partial" });
       }
     } catch {
       toast.error("Failed to load dashboard");
@@ -127,10 +125,21 @@ export default function Dashboard() {
           </div>
         }
       />
-      <div className="p-4 md:p-6 space-y-6">
-        <div className="rounded-2xl bg-secondary text-white p-5 radar-grid relative overflow-hidden">
-          <div className="absolute inset-x-0 top-0 h-16 scan-line bg-gradient-to-b from-accent/25 to-transparent pointer-events-none" />
-          <div className="relative grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="p-4 md:p-7 space-y-5 md:space-y-6">
+        <div className="dashboard-glow rounded-[22px] text-white p-5 md:p-6 relative overflow-hidden border border-white/10 shadow-[0_24px_70px_rgba(0,0,0,0.2)]">
+          <div className="absolute -right-12 -top-16 h-52 w-52 rounded-full border border-white/10 opacity-70" />
+          <div className="absolute -right-2 -top-5 h-28 w-28 rounded-full border border-accent/20" />
+          <div className="relative mb-5 flex items-center justify-between gap-4">
+            <div>
+              <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-accent">System pulse</p>
+              <p className="mt-1 text-sm text-white/65">Your risk posture, updating as events arrive.</p>
+            </div>
+            <div className="hidden sm:flex items-center gap-2 rounded-full border border-white/10 bg-black/20 px-3 py-2 text-xs text-white/70">
+              <span className="h-2 w-2 rounded-full bg-success live-dot" />
+              Streaming live
+            </div>
+          </div>
+          <div className="relative grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
             <DarkStat label="Events processed" value={stats?.total_events ?? 0} />
             <DarkStat label="Anomalies detected" value={stats?.anomalies_detected ?? 0} accent="cyan" />
             <DarkStat label="Critical alerts" value={stats?.critical_alerts ?? 0} accent="crimson" />
@@ -151,17 +160,17 @@ export default function Dashboard() {
               <AreaChart data={riskTrend}>
                 <defs>
                   <linearGradient id="anom" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#06B6D4" stopOpacity={0.45} />
-                    <stop offset="100%" stopColor="#06B6D4" stopOpacity={0.02} />
+                    <stop offset="0%" stopColor="#D9A7D7" stopOpacity={0.5} />
+                    <stop offset="100%" stopColor="#D9A7D7" stopOpacity={0.02} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1F2937" />
-                <XAxis dataKey="label" tick={{ fontSize: 10, fill: "#9CA3AF" }} hide={riskTrend.length > 18} />
-                <YAxis tick={{ fontSize: 11, fill: "#9CA3AF" }} allowDecimals={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#302932" />
+                <XAxis dataKey="label" tick={{ fontSize: 10, fill: "#A79FA8" }} hide={riskTrend.length > 18} />
+                <YAxis tick={{ fontSize: 11, fill: "#A79FA8" }} allowDecimals={false} />
                 <Tooltip
-                  contentStyle={{ background: "#111827", border: "1px solid #1F2937", color: "#E5E7EB" }}
+                  contentStyle={{ background: "#171219", border: "1px solid #4B404C", borderRadius: "12px", color: "#F6F1F5" }}
                 />
-                <Area type="monotone" dataKey="value" stroke="#06B6D4" fill="url(#anom)" />
+                <Area type="monotone" dataKey="value" stroke="#D9A7D7" strokeWidth={2} fill="url(#anom)" />
               </AreaChart>
             </ResponsiveContainer>
           </ChartCard>
@@ -174,7 +183,7 @@ export default function Dashboard() {
                   ))}
                 </Pie>
                 <Tooltip
-                  contentStyle={{ background: "#111827", border: "1px solid #1F2937", color: "#E5E7EB" }}
+                  contentStyle={{ background: "#171219", border: "1px solid #4B404C", borderRadius: "12px", color: "#F6F1F5" }}
                 />
               </PieChart>
             </ResponsiveContainer>
@@ -185,25 +194,25 @@ export default function Dashboard() {
           <ChartCard title="Event type distribution" className="lg:col-span-1">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={types}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1F2937" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#302932" />
                 <XAxis dataKey="name" tick={{ fontSize: 9 }} interval={0} angle={-20} textAnchor="end" height={60} />
                 <YAxis allowDecimals={false} tick={{ fontSize: 11 }} />
                 <Tooltip />
-                <Bar dataKey="value" fill="#06B6D4" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="value" fill="#D9A7D7" radius={[6, 6, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </ChartCard>
 
           <div className="lg:col-span-2 space-y-3">
             <div className="flex items-center justify-between">
-              <h3 className="font-semibold text-text">Live / recent high-risk activity</h3>
-              <Link to="/app/events" className="text-sm text-accent hover:underline">
+              <h3 className="font-semibold tracking-[-0.02em] text-text">Live / recent high-risk activity</h3>
+              <Link to="/app/events" className="text-sm text-accent underline-offset-4 hover:underline">
                 View all events
               </Link>
             </div>
             <div className="grid md:grid-cols-2 gap-3">
               {stream.length === 0 ? (
-                <div className="md:col-span-2 rounded-xl border border-dashed border-border bg-card px-4 py-10 text-center text-sm text-muted">
+                <div className="md:col-span-2 rounded-2xl border border-dashed border-white/15 bg-card/70 px-4 py-10 text-center text-sm text-muted">
                   No activity yet. Start the simulator to stream live risk events.
                 </div>
               ) : (
@@ -217,14 +226,14 @@ export default function Dashboard() {
 
         <div>
           <div className="flex items-center justify-between mb-3">
-            <h3 className="font-semibold text-text">Recent alerts</h3>
-            <Link to="/app/alerts" className="text-sm text-accent hover:underline">
+            <h3 className="font-semibold tracking-[-0.02em] text-text">Recent alerts</h3>
+            <Link to="/app/alerts" className="text-sm text-accent underline-offset-4 hover:underline">
               Investigate
             </Link>
           </div>
           <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-3">
             {recentAlerts.length === 0 ? (
-              <div className="md:col-span-2 xl:col-span-3 rounded-xl border border-dashed border-border bg-card px-4 py-10 text-center text-sm text-muted">
+              <div className="md:col-span-2 xl:col-span-3 rounded-2xl border border-dashed border-white/15 bg-card/70 px-4 py-10 text-center text-sm text-muted">
                 No alerts yet. High and critical events will open investigation tickets automatically.
               </div>
             ) : (
@@ -247,9 +256,9 @@ function DarkStat({ label, value, accent = "white" }) {
     mint: "text-success",
   };
   return (
-    <div className="rounded-xl border border-border bg-card/70 p-4">
-      <div className="text-xs uppercase tracking-wide text-muted">{label}</div>
-      <div className={`mt-2 text-3xl font-semibold ${colors[accent] || colors.white}`}>{value}</div>
+    <div className="rounded-2xl border border-white/10 bg-black/20 p-4 backdrop-blur-sm">
+      <div className="text-[10px] uppercase tracking-[0.14em] text-white/55">{label}</div>
+      <div className={`mt-2 text-3xl font-semibold tracking-[-0.045em] ${colors[accent] || colors.white}`}>{value}</div>
     </div>
   );
 }

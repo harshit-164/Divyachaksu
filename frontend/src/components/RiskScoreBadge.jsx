@@ -7,7 +7,7 @@ export default function RiskScoreBadge({ score, level }) {
   const color = riskColor(level);
   return (
     <div
-      className="inline-flex items-center gap-2 rounded-md border px-2.5 py-1"
+      className="inline-flex items-center gap-2 rounded-lg border px-2.5 py-1"
       style={{ borderColor: `${color}66`, background: `${color}14` }}
     >
       <span className="text-sm font-semibold tabular-nums" style={{ color }}>
@@ -21,23 +21,24 @@ export default function RiskScoreBadge({ score, level }) {
 export function LiveEventCard({ event, onClick }) {
   const isCritical = event.risk_level === "Critical" || event.risk_score >= 90;
   const isHigh = event.risk_level === "High" || event.risk_score >= 70;
-  const border = isCritical
-    ? "border-l-danger shadow-[0_0_0_1px_rgba(220,38,38,0.2)]"
+  const alertTone = isCritical
+    ? "bg-danger"
     : isHigh
-      ? "border-l-warning"
+      ? "bg-warning"
       : event.is_anomaly
-        ? "border-l-accent"
-        : "border-l-success";
+        ? "bg-accent"
+        : "bg-success";
 
   return (
     <button
       type="button"
       onClick={() => onClick?.(event)}
-      className={`w-full text-left rounded-lg border border-border bg-card border-l-4 ${border} px-3 py-3 shadow-sm hover:border-accent/30 transition fade-up`}
+      className="w-full text-left rounded-2xl border border-white/10 bg-card/90 px-4 py-3.5 shadow-[0_12px_30px_rgba(0,0,0,0.12)] hover:-translate-y-0.5 hover:border-accent/35 transition duration-200 fade-up"
     >
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <div className="text-sm font-semibold text-text truncate">
+          <div className="flex items-center gap-2 text-sm font-semibold text-text truncate">
+            <span className={`h-2 w-2 shrink-0 rounded-full ${alertTone}`} />
             {event.event_type}
             <span className="text-muted font-medium"> · {event.user_id}</span>
           </div>
@@ -50,7 +51,7 @@ export function LiveEventCard({ event, onClick }) {
         </div>
         <RiskScoreBadge score={event.risk_score} level={event.risk_level} />
       </div>
-      <div className="mt-2 flex items-center justify-between text-[11px]">
+      <div className="mt-3 flex items-center justify-between border-t border-white/[0.07] pt-2.5 text-[11px]">
         <span className="text-muted">{formatDate(event.timestamp)}</span>
         <span
           className={`font-semibold uppercase tracking-wide ${

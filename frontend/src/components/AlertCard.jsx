@@ -7,13 +7,13 @@ export default function AlertCard({ alert }) {
   return (
     <Link
       to={`/app/alerts/${alert.id}`}
-      className={`block rounded-xl border bg-card p-4 shadow-sm hover:border-accent/40 transition ${
-        critical ? "border-danger/40" : "border-border"
+      className={`block rounded-2xl border bg-card/90 p-4 shadow-[0_14px_35px_rgba(0,0,0,0.12)] hover:-translate-y-0.5 hover:border-accent/40 transition duration-200 ${
+        critical ? "border-danger/45" : "border-white/10"
       }`}
     >
       <div className="flex items-start justify-between gap-3">
         <div>
-          <div className="font-semibold text-text">{alert.title}</div>
+          <div className="font-semibold tracking-[-0.015em] text-text">{alert.title}</div>
           <p className="text-sm text-muted mt-1 line-clamp-2">{alert.description}</p>
         </div>
         <RiskBadge level={alert.severity} />

@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+backend/fraud_detection.db
+backend/*.db
+backend/models_store/*.joblib
+.env
+backend/.env
+frontend/.env
+
+# Node
+node_modules/
+frontend/dist/
+*.log
+
+# OS / IDE
+.DS_Store
+.idea/
+.vscode/
+*.swp
+Thumbs.db
+
+# Misc
+.coverage
+htmlcov/

@@ -259,7 +259,7 @@ def seed(force: bool = False) -> None:
         admin = User(
             email="admin@riskradar.demo",
             username="admin",
-            full_name="Risk Radar Admin",
+            full_name="Divyachaksu Admin",
             hashed_password=pwd_context.hash("admin123"),
             role="admin",
             is_active=True,
@@ -377,7 +377,7 @@ def seed(force: bool = False) -> None:
                 AnalystNote(
                     alert_id=alert.id,
                     author_id=admin.id,
-                    author_name="Risk Radar Admin",
+                    author_name="Divyachaksu Admin",
                     note=f"Investigating pattern for {alert.alert_type}. Initial review note #{i + 1}.",
                     created_at=datetime.utcnow() - timedelta(hours=i),
                 )
@@ -414,7 +414,7 @@ def seed(force: bool = False) -> None:
         )
         db.add(
             AppSettings(
-                business_name="Risk Radar Demo",
+                business_name="Divyachaksu Demo",
                 risk_threshold=40,
                 critical_alert_threshold=90,
                 event_simulation_speed=1500,

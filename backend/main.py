@@ -84,7 +84,7 @@ async def websocket_events(websocket: WebSocket):
     await manager.connect(websocket)
     try:
         await websocket.send_json(
-            {"type": "connected", "data": {"message": "Risk Radar live feed connected"}}
+            {"type": "connected", "data": {"message": "Divyachaksu live feed connected"}}
         )
         while True:
             message = await websocket.receive_text()

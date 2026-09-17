@@ -175,7 +175,7 @@ class Settings(Base):
     __tablename__ = "settings"
 
     id = Column(Integer, primary_key=True, index=True)
-    business_name = Column(String(200), default="Risk Radar Demo")
+    business_name = Column(String(200), default="Divyachaksu Demo")
     risk_threshold = Column(Integer, default=40)
     critical_alert_threshold = Column(Integer, default=90)
     event_simulation_speed = Column(Integer, default=1500)

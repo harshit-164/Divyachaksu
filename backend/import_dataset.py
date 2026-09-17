@@ -1,4 +1,4 @@
-"""Import an event CSV into Risk Radar through its event analysis API."""
+"""Import an event CSV into Divyachaksu through its event analysis API."""
 
 from __future__ import annotations
 

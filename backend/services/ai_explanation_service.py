@@ -188,7 +188,7 @@ def generate_mock_explanation(
         why = f"{why} Observed factors: {', '.join(factor_names[:6])}."
 
     summary = (
-        f"Risk Radar scored this {event_type.lower()} at {risk_score}/100 ({severity_tone} risk) "
+        f"Divyachaksu scored this {event_type.lower()} at {risk_score}/100 ({severity_tone} risk) "
         f"for {user_id}. The pattern looks unusual relative to recent behavior. "
         "This is a defensive monitoring signal for investigation — not proof of fraud and not "
         "guidance for bypassing controls."
@@ -217,7 +217,7 @@ def generate_mock_report_summary(report_data: dict[str, Any]) -> str:
     lead_user = top_users[0]["user_id"] if top_users else "n/a"
     lead_ip = top_ips[0]["ip_address"] if top_ips else "n/a"
     return (
-        f"Executive summary: Risk Radar processed {events} events and detected {anomalies} anomalies "
+        f"Executive summary: Divyachaksu processed {events} events and detected {anomalies} anomalies "
         f"(avg risk {avg_risk}) with {critical} critical alerts. "
         f"Risk concentrated around user {lead_user} and IP {lead_ip}. "
         "Recommended focus: clear open critical alerts, review high-value payment and failed-login clusters, "
@@ -235,7 +235,7 @@ async def _call_gemini(prompt: str, *, expect_json: bool = True) -> Optional[str
         f"{settings.gemini_model}:generateContent"
     )
     system_instruction = (
-        "You are a defensive fraud and anomaly investigation assistant for Risk Radar. "
+        "You are a defensive fraud and anomaly investigation assistant for Divyachaksu. "
         "Explain anomalies for SOC and payments analysts in clear business language. "
         "Focus on investigation and prevention. Never provide instructions for committing fraud "
         "or bypassing detection. "

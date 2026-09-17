@@ -12,7 +12,7 @@ class Settings(BaseSettings):
         protected_namespaces=("settings_",),
     )
 
-    app_name: str = "Real-Time Fraud & Anomaly Detection Dashboard"
+    app_name: str = "Divyachaksu — Real-Time Fraud & Anomaly Detection"
     app_version: str = "1.0.0"
     debug: bool = True
 

@@ -1,6 +1,6 @@
-# Risk Radar: Real-Time Anomaly Detection Dashboard
+# Divyachaksu: Real-Time Anomaly Detection Dashboard
 
-Risk Radar is a full-stack demo for monitoring event data, identifying unusual activity, assigning risk scores, and helping analysts investigate alerts. It combines a scikit-learn Isolation Forest with explainable rule triggers, a FastAPI backend, a React dashboard, and optional Gemini-generated investigation summaries.
+Divyachaksu is a full-stack demo for monitoring event data, identifying unusual activity, assigning risk scores, and helping analysts investigate alerts. It combines a scikit-learn Isolation Forest with explainable rule triggers, a FastAPI backend, a React dashboard, and optional Gemini-generated investigation summaries.
 
 > **Project scope:** The bundled model is trained on synthetic data. A CSV imported into the app is scored and saved as events; it does not automatically become model training data. Treat the output as an investigation aid, not proof of fraud or a production decision system.
 
@@ -17,7 +17,7 @@ Risk Radar is a full-stack demo for monitoring event data, identifying unusual a
 
 | Dashboard | Live events |
 | --- | --- |
-| ![Risk Radar dashboard](docs/screenshots/02-dashboard.png) | ![Events view](docs/screenshots/04-events.png) |
+| ![Divyachaksu dashboard](docs/screenshots/02-dashboard.png) | ![Events view](docs/screenshots/04-events.png) |
 
 | Alert queue | Anomaly explanation |
 | --- | --- |

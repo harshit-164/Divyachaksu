@@ -1,0 +1,114 @@
+@import "tailwindcss";
+
+@theme {
+  /* Dark ops console palette */
+  --color-primary: #020617;
+  --color-secondary: #0f172a;
+  --color-accent: #06b6d4;
+  --color-danger: #dc2626;
+  --color-warning: #f59e0b;
+  --color-success: #22c55e;
+  --color-card: #111827;
+  --color-text: #e5e7eb;
+  --color-muted: #9ca3af;
+  --color-border: #1f2937;
+  --color-panel: #0b1220;
+
+  /* Legacy aliases used across components */
+  --color-midnight: #0f172a;
+  --color-burgundy: #dc2626;
+  --color-amber: #06b6d4;
+  --color-mint: #22c55e;
+  --color-mist: #020617;
+  --color-ink: #0f172a;
+  --color-pale: #1f2937;
+  --color-charcoal: #e5e7eb;
+  --color-cool: #9ca3af;
+  --color-critical: #dc2626;
+  --color-high: #f59e0b;
+  --color-medium: #fbbf24;
+  --color-low: #22c55e;
+  --color-info: #06b6d4;
+
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Instrument Serif", Georgia, serif;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--color-text);
+  background: var(--color-primary);
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.radar-grid {
+  background-image:
+    linear-gradient(rgba(6, 182, 212, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(6, 182, 212, 0.07) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.scan-line {
+  animation: scan 4.5s linear infinite;
+}
+
+@keyframes scan {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.55;
+  }
+  100% {
+    transform: translateY(220%);
+    opacity: 0;
+  }
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.45;
+    transform: scale(1.35);
+  }
+}
+
+.live-dot {
+  animation: pulse-dot 1.4s ease-in-out infinite;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up {
+  animation: fade-up 0.45s ease-out both;
+}
+
+/* Dark surface helpers */
+.surface-card {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+}

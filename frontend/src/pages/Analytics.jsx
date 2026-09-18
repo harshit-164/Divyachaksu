@@ -22,36 +22,76 @@ import { useLive } from "../context/LiveContext";
 
 export default function Analytics() {
   const { connection, statsTick } = useLive();
-  const [data, setData] = useState(null);
+  const [data, setData] = useState({
+    events: { events_over_time: [], event_type_distribution: [] },
+    anomalies: { anomalies_over_time: [], failed_login_trend: [], transaction_amount_anomalies: [] },
+    risk: { risk_distribution: [], top_risky_users: [], top_risky_ips: [] },
+    alerts: { alerts_by_severity: [] },
+  });
+  const [failedSources, setFailedSources] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [retryCount, setRetryCount] = useState(0);
 
   useEffect(() => {
-    (async () => {
-      try {
-        const [events, anomalies, risk, alerts] = await Promise.all([
-          api.analyticsEvents(),
-          api.analyticsAnomalies(),
-          api.analyticsRisk(),
-          api.analyticsAlerts(),
-        ]);
-        setData({
-          events: events.data,
-          anomalies: anomalies.data,
-          risk: risk.data,
-          alerts: alerts.data,
-        });
-      } finally {
-        setLoading(false);
-      }
-    })();
-  }, [statsTick]);
+    let active = true;
+    const load = async () => {
+      const sources = [
+        ["events", api.analyticsEvents],
+        ["anomalies", api.analyticsAnomalies],
+        ["risk", api.analyticsRisk],
+        ["alerts", api.analyticsAlerts],
+      ];
+      const results = await Promise.allSettled(sources.map(([, request]) => request()));
+      if (!active) return;
 
-  if (loading || !data) return <LoadingSpinner />;
+      const empty = {
+        events: { events_over_time: [], event_type_distribution: [] },
+        anomalies: { anomalies_over_time: [], failed_login_trend: [], transaction_amount_anomalies: [] },
+        risk: { risk_distribution: [], top_risky_users: [], top_risky_ips: [] },
+        alerts: { alerts_by_severity: [] },
+      };
+      const nextData = { ...empty };
+      const failed = [];
+      results.forEach((result, index) => {
+        const [name] = sources[index];
+        if (result.status === "fulfilled" && result.value?.data) {
+          nextData[name] = { ...empty[name], ...result.value.data };
+        } else {
+          failed.push(name);
+        }
+      });
+
+      setData(nextData);
+      setFailedSources(failed);
+      setLoading(false);
+    };
+
+    load();
+    return () => {
+      active = false;
+    };
+  }, [statsTick, retryCount]);
+
+  if (loading) return <LoadingSpinner />;
 
   return (
     <div>
       <Topbar title="Analytics" subtitle="Trends across events, risk, and alerts" connection={connection} />
       <div className="p-4 md:p-6 grid lg:grid-cols-2 gap-4">
+        {failedSources.length > 0 ? (
+          <div className="lg:col-span-2 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-warning/30 bg-warning/10 px-4 py-3 text-sm text-text" role="status">
+            <span>
+              Some analytics data is temporarily unavailable. The other charts are still shown.
+            </span>
+            <button
+              type="button"
+              onClick={() => setRetryCount((count) => count + 1)}
+              className="font-medium text-accent underline underline-offset-4"
+            >
+              Retry loading
+            </button>
+          </div>
+        ) : null}
         <ChartCard title="Events over time">
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={data.events.events_over_time || []}>
